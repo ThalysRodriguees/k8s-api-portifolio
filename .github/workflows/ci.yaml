@@ -18,6 +18,12 @@ jobs:
       packages: write
       
     steps:
+      - name: Transforma nome do repositório em minúsculas
+        id: string
+        uses: ASzc/change-case-action@v4
+        with:
+          string: ${{ github.repository }}
+          
       - name: Checkout do código
         uses: actions/checkout@v4
 
