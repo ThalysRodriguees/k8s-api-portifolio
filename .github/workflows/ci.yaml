@@ -27,12 +27,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Obter nome do repositório em minúsculas
+        id: repo_name
+        run: echo "lowercase=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          # Converte automaticamente o nome do repositório para minúsculas prevenindo erros de maiúsculas
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
-        env:
-          IMAGE_NAME: ${{ github.repository }}
+          tags: ${{ env.REGISTRY }}/${{ steps.repo_name.outputs.lowercase }}:latest
