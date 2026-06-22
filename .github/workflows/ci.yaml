@@ -7,7 +7,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push:
@@ -18,12 +17,6 @@ jobs:
       packages: write
       
     steps:
-      - name: Transforma nome do repositório em minúsculas
-        id: string
-        uses: ASzc/change-case-action@v4
-        with:
-          string: ${{ github.repository }}
-          
       - name: Checkout do código
         uses: actions/checkout@v4
 
@@ -39,4 +32,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}:latest
+          tags: ${{ env.REGISTRY }}/${{ github.repository_owner	}}/${{ github.event.repository.name }}:latest
