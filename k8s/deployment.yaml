@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-portfolio-deployment
+  labels:
+    app: api-portfolio
+spec:
+  replicas: 1 # Quantidade de instâncias rodando
+  selector:
+    matchLabels:
+      app: api-portfolio
+  template:
+    metadata:
+      labels:
+        app: api-portfolio
+    spec:
+      containers:
+        - name: api-portfolio
+          image: ghcr.io/thalysrodriguees/k8s-api-portifolio:latest
+          ports:
+            - containerPort: 8000
